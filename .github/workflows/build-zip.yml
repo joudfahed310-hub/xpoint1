@@ -10,24 +10,32 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Extract project
         run: |
-          test -f xPoint-fixed-source.zip
-          unzip -q xPoint-fixed-source.zip -d extracted
+          test -f "xPoint-fixed-source .zip"
+          unzip -q "xPoint-fixed-source .zip" -d extracted
           test -f extracted/xPoint/gradlew
           python3 extracted/xPoint/scripts/validate_android_xml.py
-      - uses: actions/setup-java@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
+
       - name: Build APK
         working-directory: extracted/xPoint
         run: |
           chmod +x gradlew
           ./gradlew --no-daemon :app:assembleDebug
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
           name: xPoint-Pro-APK
           path: extracted/xPoint/app/build/outputs/apk/debug/*.apk
