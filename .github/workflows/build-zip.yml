@@ -17,8 +17,8 @@ jobs:
 
       - name: Extract project
         run: |
-          test -f "xPoint-fixed-source .zip"
-          unzip -q "xPoint-fixed-source .zip" -d extracted
+          test -f "xPoint-fixed-source_.zip"
+          unzip -q "xPoint-fixed-source_.zip" -d extracted
           test -f extracted/xPoint/gradlew
           python3 extracted/xPoint/scripts/validate_android_xml.py
 
